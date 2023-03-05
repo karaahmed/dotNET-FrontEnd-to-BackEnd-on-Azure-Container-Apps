@@ -30,5 +30,5 @@ app.Run();
 public class Product
 {
     public Guid ProductId => Guid.NewGuid();
-    public string ProductName { get; set; }
+    public string? ProductName { get; set; }
 }
