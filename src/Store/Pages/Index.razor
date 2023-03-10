@@ -32,23 +32,15 @@
     List<Product> _products = new List<Product>();
     bool _shouldRender = false;
     protected override bool ShouldRender() => _shouldRender;
-    const string cacheKey = "PRODUCTS";
 
     protected override async Task OnInitializedAsync()
     {
-        Product[] tmp;
-        if (!_memoryCache.TryGetValue(cacheKey, out tmp))
+        var products = await _storeBackendClient.GetProducts();
+        foreach (var product in products)
         {
-            var products = await _storeBackendClient.GetProducts();
-            foreach (var product in products)
-            {
-                product.Quantity = await _storeBackendClient.GetInventory(product.ProductId);
-            }
-            _products = products.ToList();
-            _memoryCache.Set<Product[]>(cacheKey, _products.ToArray());
-            tmp = _products.ToArray();
+            product.Quantity = await _storeBackendClient.GetInventory(product.ProductId);
         }
-        _products = tmp.ToList();
+        _products = products.ToList();
 
         _shouldRender = true;
     }

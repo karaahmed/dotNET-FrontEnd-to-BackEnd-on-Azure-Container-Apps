@@ -1,0 +1,53 @@
+version: '3.4'
+
+services:
+  redis:
+    image: redis:alpine
+    ports:
+      - "5379:6379"
+
+  zipkin:
+    ports:
+      - "5411:9411"
+
+  store:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "51001:80"
+
+  inventoryapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "51002:80"
+
+  inventoryapi-dapr:
+    command: ["./daprd",
+      "-app-id", "inventoryapi",
+      "-app-port", "80",
+      "-components-path", "/components",
+      "-config", "/configuration/store-config.yaml"
+      ]
+    volumes:
+      - "./infra/dapr/components/:/components"
+      - "./infra/dapr/configuration/:/configuration"
+
+
+  productapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "51003:80"
+
+  productapi-dapr:
+    command: ["./daprd",
+      "-app-id", "productapi",
+      "-app-port", "80",
+      "-components-path", "/components",
+      "-config", "/configuration/store-config.yaml"
+      ]
+    volumes:
+      - "./infra/dapr/components/:/components"
+      - "./infra/dapr/configuration/:/configuration"
+
