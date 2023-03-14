@@ -18,8 +18,13 @@
     <None Include="infra\dapr\components\store-secretstore.yaml" />
     <None Include="infra\dapr\components\store-statestore.yaml" />
     <None Include="infra\dapr\configuration\store-config.yaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="infra\deploy\" />
+    <None Include="infra\deploy\containerapps\modules\apps\inventory-api.bicep" />
+    <None Include="infra\deploy\containerapps\modules\apps\product-api.bicep" />
+    <None Include="infra\deploy\containerapps\modules\apps\store.bicep" />
+    <None Include="infra\deploy\containerapps\modules\dapr\statestore.bicep" />
+    <None Include="infra\deploy\containerapps\modules\infra\container-apps-env.bicep" />
+    <None Include="infra\deploy\containerapps\modules\infra\cosmos-db.bicep" />
+    <None Include="infra\deploy\containerapps\modules\infra\identity.bicep" />
+    <None Include="infra\deploy\main.bicep" />
   </ItemGroup>
 </Project>
